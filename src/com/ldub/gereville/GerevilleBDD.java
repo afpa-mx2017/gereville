@@ -8,6 +8,8 @@ package com.ldub.gereville;
 import com.ldub.gereville.model.Pays;
 import com.ldub.gereville.model.dao.PaysDAO;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +27,33 @@ public class GerevilleBDD {
         for (Pays pays : payss) {
             System.out.println("pays:" + pays.getNom());
         }
+        
+        
+        //test ajout
+        Pays p = new Pays();
+        p.setNom("LYON");
+        
+        try {
+            PaysDAO.save(p);
+            System.out.println(p.getId());
+        } catch (Exception ex) {
+            Logger.getLogger(GerevilleBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        //test findOneBy
+        Pays p2 = PaysDAO.findById(p.getId());
+        System.out.println(p2.getNom());
+        
+        //test update
+        p2.setNom("CHAMBERY");
+        try {
+            PaysDAO.update(p2);
+            System.out.println(p2.getNom());
+        } catch (Exception ex) {
+            Logger.getLogger(GerevilleBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }
     

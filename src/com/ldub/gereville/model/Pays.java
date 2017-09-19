@@ -18,7 +18,11 @@ public class Pays {
     private String nom;
     private List<Ville> villes = new ArrayList<>();
     
-
+    public Pays(){
+        
+    }
+    
+    
     public Pays(int id, String nom) {
         this.id = id;
         this.nom = nom;

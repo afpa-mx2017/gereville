@@ -43,7 +43,7 @@ public class DBConnect {
                        catch(Exception e)
                        {
                           e.printStackTrace();
-                          throw new RuntimeException();
+                          throw new RuntimeException(e);
                        }
             }
 
