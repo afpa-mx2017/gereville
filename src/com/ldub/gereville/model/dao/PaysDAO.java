@@ -5,6 +5,7 @@
  */
 package com.ldub.gereville.model.dao;
 
+import com.ldub.gereville.model.Capitale;
 import com.ldub.gereville.model.Pays;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -86,21 +87,31 @@ public class PaysDAO {
         try {
             stm = c.createStatement();
 
-            String sql = "select * from pays ";
+            String sql = "select * from pays left join ville on pays.capitale_id = ville.id ";
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String nom = rs.getString("nom");
-
+                int id = rs.getInt("pays.id");
+                String nom = rs.getString("pays.nom");
+                
                 Pays p = new Pays(id, nom);
+                
+                int villeId = rs.getInt("ville.id");
+                if (!rs.wasNull()){ //ya une capitale
+                    String nomVille = rs.getString("ville.nom");
+                    int nbhab = rs.getInt("ville.nbhabitant");
+                    Capitale cap = new Capitale(nomVille, p, nbhab);
+                    cap.setId(villeId);
+                    p.setCapitale(cap);
+                }
+                
 
                 ps.add(p);
             }
             rs.close();
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
 
         return ps;

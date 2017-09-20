@@ -18,7 +18,7 @@ public class DBConnect {
     
     private static Connection conn =null;
 
-	 final static String URL = "jdbc:mysql://localhost/gereville?noAccessToProcedureBodies=true";
+	 final static String URL = "jdbc:mysql://localhost/gereville2?noAccessToProcedureBodies=true";
         /**
          * 
          * @return RunTimeException() if any pb

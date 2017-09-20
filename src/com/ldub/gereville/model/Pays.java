@@ -5,6 +5,7 @@
  */
 package com.ldub.gereville.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +13,11 @@ import java.util.List;
  *
  * @author lionel
  */
-public class Pays {
+public class Pays implements Serializable{
     
     private int id;
     private String nom;
+    private Capitale capitale;
     private List<Ville> villes = new ArrayList<>();
     
     public Pays(){
@@ -39,6 +41,14 @@ public class Pays {
 
     public void setVilles(List<Ville> villes) {
         this.villes = villes;
+    }
+
+    public Capitale getCapitale() {
+        return capitale;
+    }
+
+    public void setCapitale(Capitale capitale) {
+        this.capitale = capitale;
     }
     
     

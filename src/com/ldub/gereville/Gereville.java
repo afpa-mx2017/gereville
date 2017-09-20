@@ -6,9 +6,8 @@
 package com.ldub.gereville;
 
 import com.ldub.gereville.model.Capitale;
-import com.ldub.gereville.model.Ville;
 import com.ldub.gereville.model.Pays;
-import com.ldub.gereville.model.dao.PaysDAO;
+import com.ldub.gereville.model.Ville;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,14 +31,15 @@ public class Gereville {
          * instanciation de 3 objets Ville de 3 manière différente.
          * 
          */
+        Pays pFrance = new Pays(1, "FRANCE");
         //sans constructeur ou constructeur vide
         Ville v1 = new Ville();
-        v1.setPays("FRANCE");
+        v1.setPays(pFrance);
         v1.setNom("Toulouse");
         v1.setNbHabitants(500000);
         
-        Ville v2 = new Ville("PARIS","FRANCE",1000000);
-        Ville v3 = new Ville("LYON", "FRANCE");
+        Ville v2 = new Ville( "PARIS",pFrance,1000000);
+        Ville v3 = new Ville("LYON", pFrance);
         v3.setNbHabitants(1000000);
         
         //ajout des villes dans une liste
@@ -52,13 +52,9 @@ public class Gereville {
         
         //parcours d'une liste de ville
         for (Ville v : villes) {
-            v.affDesc();
+            System.out.println(v);
         }
         
-        //
-        v1.affDesc();
-        v2.affDesc();
-        v3.affDesc();
         
         // obtenir le nom du pays via une instance de Ville
         //String nomPays = v3.getPays().getNom();
@@ -66,24 +62,19 @@ public class Gereville {
         
 
         
-        Ville v4 = new Capitale("Paris","FRANCE",12550000, "Jean Claude Duss");
-        v4.affDesc();
+        Ville v4 = new Capitale("Paris",pFrance,12550000);
+        System.out.println(v4);
         
         
-        HashMap<String, String> map1 = new HashMap<>();
-        map1.put("fou", "crazy");
-        
-        String traductionAnglais = map1.get("fou");
-        
-        
+        //exemple avec HashMap
         Map<String, List<Ville>> map = new HashMap<>();
         
         List<Ville> villes2 = new ArrayList<>();
         map.put("FRANCE", villes2);
         
         
-        villes2.add(new Ville("PARIS", "FRANCE", 12122121));
-        villes2.add(new Ville("RENNES", "FRANCE", 800000));
+        villes2.add(new Ville("PARIS", pFrance, 12122121));
+        villes2.add(new Ville("RENNES", pFrance, 800000));
         
         for (Map.Entry<String, List<Ville>> entry : map.entrySet()) {
             String key = entry.getKey();

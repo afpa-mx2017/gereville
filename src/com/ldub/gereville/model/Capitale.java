@@ -14,20 +14,20 @@ public class Capitale extends Ville{
     
     private String president;
 
-    public Capitale(String nom, String pays, int nbHabitants, String president) {
-        super(nom, pays, nbHabitants);
+    public Capitale(String nom, Pays pays, int nbHabitants) {
+        super( nom, pays, nbHabitants);
+        //this.president = president;
+    }
+
+    public String getPresident() {
+        return president;
+    }
+
+    public void setPresident(String president) {
         this.president = president;
     }
     
     
-    
-    
-    @Override
-    public void affDesc(){
-        super.affDesc();
-        System.out.println(this.nom + " est une capitale de " + this.pays + " de catégorie " + this.categorie());
-        
-    }
 
     @Override
     public String toString() {

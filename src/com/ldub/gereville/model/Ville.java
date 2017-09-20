@@ -13,9 +13,9 @@ import java.io.Serializable;
  */
 public class Ville implements Serializable{
     
-    
+    protected int id;
     protected String nom;
-    protected String pays;
+    protected Pays pays;
     protected int nbHabitants;
    
 
@@ -23,13 +23,13 @@ public class Ville implements Serializable{
     public Ville(){
     }
 
-    public Ville(String nom, String pays, int nbHabitants) {
+    public Ville(String nom, Pays pays, int nbHabitants) {
         this.nom = nom;
         this.pays = pays;
         this.nbHabitants = nbHabitants;
     }
 
-    public Ville(String nom, String pays) {
+    public Ville(String nom, Pays pays) {
         this.nom = nom;
         this.pays = pays;
     }
@@ -43,11 +43,11 @@ public class Ville implements Serializable{
         this.nom = nom;
     }
 
-    public String getPays() {
+    public Pays getPays() {
         return pays;
     }
 
-    public void setPays(String pays) {
+    public void setPays(Pays pays) {
         
         this.pays = pays;
     }
@@ -59,14 +59,16 @@ public class Ville implements Serializable{
     public void setNbHabitants(int nbHabitants) {
         this.nbHabitants = nbHabitants;
     }
-    
-    
-    
-    
-    public void affDesc(){
-        System.out.println(this.nom + " est une ville de " + this.pays + " de catégorie " + this.categorie());
-        
+
+    public int getId() {
+        return id;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     
     protected char categorie(){
         char categorie = '?';

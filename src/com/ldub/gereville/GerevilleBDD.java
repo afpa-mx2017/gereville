@@ -31,7 +31,7 @@ public class GerevilleBDD {
         
         //test ajout
         Pays p = new Pays();
-        p.setNom("LYON");
+        p.setNom("BELGIQUE");
         
         try {
             PaysDAO.save(p);
@@ -46,7 +46,7 @@ public class GerevilleBDD {
         System.out.println(p2.getNom());
         
         //test update
-        p2.setNom("CHAMBERY");
+        p2.setNom("UK");
         try {
             PaysDAO.update(p2);
             System.out.println(p2.getNom());

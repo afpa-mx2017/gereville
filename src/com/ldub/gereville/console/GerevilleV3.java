@@ -2,30 +2,32 @@ package com.ldub.gereville.console;
 
 
 import com.ldub.gereville.model.Capitale;
+import com.ldub.gereville.model.Pays;
 import com.ldub.gereville.model.Ville;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author lionel
- */
+
 public class GerevilleV3 {
 
-    static HashMap listePays = new HashMap();
+    
+    static HashMap<String, ArrayList> listePays = new HashMap();
+    static List<Pays> payss = new ArrayList<>();
+    
 
     public static void main(String[] args) throws Exception {
         
+        //initialisation de 3 pays
+        payss.add(new Pays(1, "FRANCE"));
+        payss.add(new Pays(2, "ESPAGNE"));
+        payss.add(new Pays(3, "BELGIQUE"));
+        
         ListeVille listeVille = new ListeVille();
-        VilleFichier vf = new VilleFichier("villes.txt");
+
         int choix;
 
         Ville v;
@@ -70,9 +72,7 @@ public class GerevilleV3 {
 
                 case 5:
                     if (!listeVille.isEmpty()) {
-                        vf.Ouvrir("E");
-                        vf.Ecrire(listeVille);
-                        vf.Fermer("E");
+                        Storage.sauvegarde(listeVille);
                         bMaj = true;
                         System.out.println("La liste est sauvegardée");
                     } else {
@@ -87,14 +87,15 @@ public class GerevilleV3 {
                         if (listePays != null) {
                             listePays.clear();
                         }
-                        vf.Ouvrir("L");
-                        listeVille = (ListeVille) vf.Lire();
+                        ListeVille lv = Storage.restauration();
+                        if (lv!=null) listeVille = lv;
+                        
                         // remplissage du dictionnaire
                         for (int i = 0; i < listeVille.size(); i++) {
                             ajouteVille((Ville) listeVille.get(i));
                         }
                         System.out.println("La liste est restaurée");
-                        vf.Fermer("L");
+ 
                     } catch (Exception e) {
                         System.out.println("Veuillez sauvegarder les données avant");
                     }
@@ -124,8 +125,10 @@ public class GerevilleV3 {
     }
 
     public static Ville saisieVille() {
-        String nom, pres, pays;
+        String nom, pres;
         int nbhab;
+        
+        Integer.parseInt("2");
 
         System.out.println("\nSaisie d'une ville");
 
@@ -138,13 +141,20 @@ public class GerevilleV3 {
             nom = Lire.getString().toUpperCase();
         }
         // saisie du pays
-        System.out.println("Pays : ");
-        pays = Lire.getString();
-        while (pays.equals("")) {
-            System.out.println("Veuillez entrer une chaine de caractères non vide");
-            System.out.println("Pays : ");
-            pays = Lire.getString().toUpperCase();
+        Pays pays = null;
+        do {
+            System.out.println("Choisissez votre Pays : ");
+            for(Pays p : payss){
+                System.out.println(p.getId() + " - " + p.getNom());
+            }
+            int idPays = Lire.getInt();
+            pays = getPays(idPays);
+            if (pays==null){
+                System.out.println("humm, pas trouvé de pays...");
+            }
         }
+        while(pays==null);
+
         // saisie du nombre d'habitants
         System.out.println("Nombre d'habitants : ");
         nbhab = Lire.getInt(); // champ vide accepté
@@ -159,13 +169,15 @@ public class GerevilleV3 {
         if (pres.equals("")) {
             return new Ville(nom, pays, nbhab);
         } else {
-            return new Capitale(nom, pays, nbhab, pres);
+            Capitale cap = new Capitale(nom, pays, nbhab);
+            cap.setPresident(pres);
+            return cap;
         }
     }
 
     // fonction ajouteVille dans le dictionnaire listePays
     public static boolean ajouteVille(Ville uneVille) {
-        String pays = uneVille.getPays().toUpperCase();
+        String pays = uneVille.getPays().getNom().toUpperCase();
         // on consulte le dictionnaire sur la clé pays
         ArrayList<Ville> lVilles = (ArrayList) listePays.get(pays);
         if (lVilles == null) // si pas de villes pour ce pays
@@ -195,7 +207,7 @@ public class GerevilleV3 {
             System.out.println("\n" + pays.getKey());
             ArrayList<Ville> villesPays = (ArrayList) pays.getValue();
             for (Ville v1 : villesPays) {
-                v1.affDesc();
+                System.out.println(v1);
             }
         }
     }
@@ -224,9 +236,25 @@ public class GerevilleV3 {
             System.out.println("Pays absent");
         } else {
             for (Ville v1 : villesPays) {
-                v1.affDesc();
+                System.out.println(v1);
             }
         }
 
+    }
+    
+    /**
+     * obtenir un pays par son identifiant
+     * @param paysId id du pays
+     * @return instance de Pays ou null si non trouvé dans la liste
+     */
+    private static Pays getPays(int paysId){
+        
+        for (Pays p: payss){
+            if (p.getId()==paysId){
+                return p;
+            }
+        }
+        
+        return null;
     }
 }
