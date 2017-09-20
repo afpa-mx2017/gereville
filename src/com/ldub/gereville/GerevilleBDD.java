@@ -54,6 +54,14 @@ public class GerevilleBDD {
             Logger.getLogger(GerevilleBDD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        try {
+            //suppression:
+            PaysDAO.delete(p2);
+        } catch (Exception ex) {
+            Logger.getLogger(GerevilleBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         
     }
     

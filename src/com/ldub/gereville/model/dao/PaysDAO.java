@@ -19,10 +19,9 @@ import java.util.List;
  * @author lionel
  */
 public class PaysDAO {
-    
-    
-     public static void update(Pays p) throws Exception {
-	Connection c = DBConnect.getConnection();
+
+    public static void update(Pays p) throws Exception {
+        Connection c = DBConnect.getConnection();
         PreparedStatement stm;
         try {
 
@@ -33,16 +32,32 @@ public class PaysDAO {
             stm.executeUpdate();
 
         } catch (SQLException e) {
-                       //pb if here
+            //pb if here
             throw new Exception("pb lors de la mise a jour de pays:" + e.getMessage());
         }
-     }
+    }
 
-    public static void save(Pays p) throws Exception{
+    public static void delete(Pays p) throws Exception {
+        Connection c = DBConnect.getConnection();
+        PreparedStatement stm;
+        try {
+
+            stm = c.prepareStatement("DELETE FROM pays WHERE id = ?");
+            stm.setInt(1, p.getId());
+
+            stm.executeUpdate();
+
+        } catch (SQLException e) {
+            //pb if here
+            throw new Exception("pb lors de la suppression de pays:" + e.getMessage());
+        }
+    }
+
+    public static void save(Pays p) throws Exception {
 
         Connection c = DBConnect.getConnection();
         PreparedStatement stm;
-        
+
         stm = c.prepareStatement("INSERT INTO pays (nom) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
         stm.setString(1, p.getNom());
 
@@ -53,7 +68,6 @@ public class PaysDAO {
             p.setId(rs.getInt(1));
         }
         stm.close();
-
 
     }
 
