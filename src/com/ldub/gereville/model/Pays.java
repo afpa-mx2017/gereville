@@ -24,6 +24,9 @@ public class Pays implements Serializable{
         
     }
     
+    public Pays(String nom) {
+        this.nom = nom;
+    }
     
     public Pays(int id, String nom) {
         this.id = id;
