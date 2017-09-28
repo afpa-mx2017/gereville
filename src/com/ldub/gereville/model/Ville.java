@@ -67,6 +67,28 @@ public class Ville implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        final Ville other = (Ville) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
     
     
     

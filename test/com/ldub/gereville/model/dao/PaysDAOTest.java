@@ -3,7 +3,7 @@
  */
 package com.ldub.gereville.model.dao;
 
-import com.ldub.gereville.GerevilleBDD;
+
 import com.ldub.gereville.model.Pays;
 import java.util.List;
 import java.util.logging.Level;

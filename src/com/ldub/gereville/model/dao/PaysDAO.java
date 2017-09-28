@@ -124,13 +124,21 @@ public class PaysDAO {
         try {
             stm = c.createStatement();
 
-            String sql = "select * from pays WHERE pays.id=" + numPays;
+            String sql = "select * from pays LEFT JOIN ville ON pays.capitale_id = ville.id WHERE pays.id=" + numPays;
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
                 int id = rs.getInt("id");
                 String nom = rs.getString("nom");
                 p = new Pays(id, nom);
+                int villeId = rs.getInt("ville.id");
+                if (!rs.wasNull()){ //ya une capitale
+                    String nomVille = rs.getString("ville.nom");
+                    int nbhab = rs.getInt("ville.nbhabitant");
+                    Capitale cap = new Capitale(nomVille, p, nbhab);
+                    cap.setId(villeId);
+                    p.setCapitale(cap);
+                }
 
             }
             rs.close();

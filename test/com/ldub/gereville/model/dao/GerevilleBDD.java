@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ldub.gereville;
+package com.ldub.gereville.model.dao;
 
 import com.ldub.gereville.model.Pays;
 import com.ldub.gereville.model.dao.PaysDAO;
